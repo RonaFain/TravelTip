@@ -29,9 +29,10 @@ function addMarker(loc) {
   return marker;
 }
 
-function panTo(cords) {
-  const laLatLng = new google.maps.LatLng(cords.lat, cords.lng);
-  addMarker(cords);
+function panTo(loc) {
+  console.log(loc);
+  const laLatLng = new google.maps.LatLng(loc.lat, loc.lng);
+  addMarker(loc);
   gMap.panTo(laLatLng);
 }
 

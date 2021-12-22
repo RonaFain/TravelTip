@@ -1,4 +1,4 @@
-// import { storageService } from './storage.service.js';
+import { storageService } from './storage.service.js';
 import { api } from '../../api.js';
 
 export const locService = {
@@ -6,7 +6,8 @@ export const locService = {
   getGeoCode,
 };
 
-const STORAGE_KEY = 'locDB';
+const STORAGE_KEY = 'locsDB';
+const gLocs = storageService.load(STORAGE_KEY) || [];
 
 const locs = [
   { name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
@@ -16,19 +17,26 @@ const locs = [
 function getLocs() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(locs);
+      resolve(gLocs);
     }, 2000);
   });
 }
 
 function getGeoCode(value) {
-  //   const API_KEY = 'AIzaSyDJT_0I2p9RrSIS-V3tvG0XChzgDjkyODA';
   const API_KEY = api.APIKEY;
-  //   console.log(API_KEY);
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${API_KEY}`;
-  console.log(url);
-  return axios.get(url).then((res) => ({
-    lat: res.data.results[0].geometry.location.lat,
-    lng: res.data.results[0].geometry.location.lng,
-  }));
+  return axios.get(url).then((res) => {
+    const newLoc = {
+      id: res.data.results[0].place_id,
+      name: res.data.results[0].address_components[0].short_name,
+      lat: res.data.results[0].geometry.location.lat,
+      lng: res.data.results[0].geometry.location.lng,
+      weather: 'weather',
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    };
+    gLocs.push(newLoc);
+    storageService.save(STORAGE_KEY, gLocs);
+    return newLoc;
+  });
 }

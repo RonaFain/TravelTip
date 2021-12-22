@@ -50,11 +50,10 @@ function onGetUserPos() {
     });
 }
 function onGoToLoc(ev) {
-  console.log(ev);
   ev.preventDefault();
   const elInput = document.querySelector('input[name="loc"]');
   const inputValue = elInput.value;
-  locService.getGeoCode(inputValue).then(mapService.panTo);
-  // mapService.panTo(32.0626854, 34.7709289);
+  locService.getGeoCode(inputValue).then(mapService.panTo)
   // mapService.panTo(35.6895, 139.6917);
+  renderLocs()
 }
