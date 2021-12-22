@@ -5,18 +5,29 @@ export const mapService = {
   initMap,
   addMarker,
   panTo,
-  moveToMap
+  moveToMap,
+  getWeather,
+  getLastLoc,
 };
 
-var gMap;
+let gMap;
+let gLastLoc;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlLat = urlParams.get('lat');
+  const urlLng = urlParams.get('lng');
+  if (urlLat && urlLng) {
+    lat = urlLat;
+    lng = urlLng;
+  }
   return _connectGoogleApi().then(() => {
     gMap = new google.maps.Map(document.querySelector('#map'), {
       center: { lat, lng },
       zoom: 15,
     });
     let posToMark = { lat: lat, lng: lng };
+    gLastLoc = {lat,lng};
     addMarker(posToMark);
     addLocsToMap();
     google.maps.event.addListener(gMap, 'click', function (event) {
@@ -35,9 +46,9 @@ function addMarker(loc) {
 }
 
 function addLocsToMap() {
-  locService.getLocs().then(locs => {
-    locs.forEach(loc => {
-      addMarker({lat: loc.lat , lng: loc.lng})
+  locService.getLocs().then((locs) => {
+    locs.forEach((loc) => {
+      addMarker({ lat: loc.lat, lng: loc.lng });
     });
   });
 }
@@ -45,6 +56,7 @@ function addLocsToMap() {
 function panTo(loc) {
   const laLatLng = new google.maps.LatLng(loc.lat, loc.lng);
   addMarker(loc);
+  gLastLoc = { lat: loc.lat, lng: loc.lng };
   gMap.panTo(laLatLng);
 }
 
@@ -62,6 +74,22 @@ function _connectGoogleApi() {
   });
 }
 
+function getLastLoc() {
+  return gLastLoc;
+}
+
 function moveToMap(loc) {
-  gMap.setCenter({lat: loc.lat, lng: loc.lng})
+  gMap.setCenter({ lat: loc.lat, lng: loc.lng });
+}
+
+function getWeather(lat, lang) {
+  const W_KEY = api.WEATHERKEY;
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lang}&appid=${api.WEATHERKEY}`;
+  return axios.get(url).then(res => {
+    const weather = {
+      temp: res.data.main.temp,
+      wind: res.data.wind.speed
+    }
+    return weather;
+  });
 }

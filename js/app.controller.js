@@ -8,6 +8,7 @@ window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onShowLoc = onShowLoc;
 window.onRemoveLoc = onRemoveLoc;
+window.onCopyQueryString = onCopyQueryString;
 
 function onInit() {
   mapService
@@ -17,6 +18,7 @@ function onInit() {
     })
     .catch(() => console.log('Error: cannot init map'));
   onGetLocs();
+  mapService.getWeather(32.0749831, 34.9120554).then(renderWeather);
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -83,4 +85,22 @@ function onRemoveLoc(locId) {
   locService.removeLoc(locId);
   mapService.initMap();
   onGetLocs();
+}
+
+function renderWeather(weather) {
+  console.log('weather', weather);
+  const strHtml = `
+      <p>Temp:<span>${weather.temp}</span></p>
+      <p>Wind:<span>${weather.wind}</span></p>
+  `;
+  document.querySelector('.weather-container').innerHTML = strHtml;
+}
+
+function onCopyQueryString() {
+  const lastPos = mapService.getLastLoc();
+  console.log('the last pos', lastPos);
+
+  navigator.clipboard.writeText(
+    `https://ronafain.github.io/TravelTip/index.html?lat=${lastPos.lat}&lng=${lastPos.lng}`
+  );
 }
