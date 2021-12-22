@@ -17,7 +17,7 @@ const locs = [
 function getLocs() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(gLocs);
+      resolve(gLocs => [gLocs]);
     }, 2000);
   });
 }

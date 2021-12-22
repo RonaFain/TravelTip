@@ -55,5 +55,4 @@ function onGoToLoc(ev) {
   const inputValue = elInput.value;
   locService.getGeoCode(inputValue).then(mapService.panTo)
   // mapService.panTo(35.6895, 139.6917);
-  renderLocs()
 }
