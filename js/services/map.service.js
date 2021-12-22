@@ -79,7 +79,7 @@ function getLastLoc() {
 }
 
 function moveToMap(loc) {
-  gMap.setCenter({ lat: loc.lat, lng: loc.lng });
+  gMap.setCenter({ lat: +loc.lat, lng: +loc.lng });
 }
 
 function getWeather(lat, lang) {
