@@ -15,6 +15,7 @@ function onInit() {
     })
     .catch(() => console.log('Error: cannot init map'));
   // console.log('hello')
+  renderLocTable()
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -55,6 +56,24 @@ function onGoToLoc(ev) {
   const elInput = document.querySelector('input[name="loc"]');
   const inputValue = elInput.value;
   locService.getGeoCode(inputValue).then(mapService.panTo);
-  // mapService.panTo(32.0626854, 34.7709289);
-  // mapService.panTo(35.6895, 139.6917);
+ 
+}
+
+
+
+
+
+
+
+
+
+function renderLocTable() {
+  const locs = locService.getLocs()
+  var strHtmls = locations.map((loc) => {
+    return `<tr><td>${loc.id}</td><td>${loc.name}</td><td>${loc.lat}</td>
+    <td>${loc.lng}</td><td>${loc.weather}</td><td>${loc.createdAt}</td><td>${loc.updatedAt}</td></tr>`
+  }).join('')
+
+  document.querySelector('tbody').innerHTML=renderLocTable()
+
 }

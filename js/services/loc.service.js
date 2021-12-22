@@ -1,5 +1,6 @@
 // import { storageService } from './storage.service.js';
 import { api } from '../../api.js';
+import{storageService} from './storage.service.js'
 
 export const locService = {
   getLocs,
