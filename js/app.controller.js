@@ -53,6 +53,7 @@ function onGoToLoc(ev) {
   const inputValue = elInput.value;
   locService.getGeoCode(inputValue).then(mapService.panTo);
   onGetLocs();
+  elInput.value = '';
 }
 
 function renderLocTable(locs) {
@@ -66,17 +67,20 @@ function renderLocTable(locs) {
               <td>${loc.weather}</td>
               <td>${loc.createdAt}</td>
               <td>${loc.updatedAt}</td>
-              <td><button onclick="onShowLoc('${loc.lat}' , '${loc.lng}')">Go</button></td>
+              <td><button onclick="onShowLoc('${loc.lat}' , '${loc.lng}', '${loc.name}')">Go</button></td>
               <td><button onclick="onRemoveLoc('${loc.id}')">Delete</button></td>
             </tr>`;
     })
     .join('');
 
   document.querySelector('tbody').innerHTML = strHtmls;
+  console.log(locs[locs.length - 1]);
+  document.querySelector('.loc-name').innerText = locs[locs.length -1].name;
 }
 
-function onShowLoc(lat, lng) {
+function onShowLoc(lat, lng, name) {
   mapService.moveToMap({ lat: +lat, lng: +lng });
+  document.querySelector('.loc-name').innerText = name;
   onGetLocs();
 }
 

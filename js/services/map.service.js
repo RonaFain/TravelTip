@@ -87,8 +87,8 @@ function getWeather(lat, lang) {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lang}&appid=${api.WEATHERKEY}`;
   return axios.get(url).then(res => {
     const weather = {
-      temp: res.data.main.temp,
-      wind: res.data.wind.speed
+      temp: (res.data.main.temp - 273).toFixed(2),
+      wind: res.data.wind.speed + ' 🌀 '
     }
     return weather;
   });
