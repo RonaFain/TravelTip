@@ -18,8 +18,8 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
   const urlLat = urlParams.get('lat');
   const urlLng = urlParams.get('lng');
   if (urlLat && urlLng) {
-    lat = urlLat;
-    lng = urlLng;
+    lat = +urlLat;
+    lng = +urlLng;
   }
   return _connectGoogleApi().then(() => {
     gMap = new google.maps.Map(document.querySelector('#map'), {

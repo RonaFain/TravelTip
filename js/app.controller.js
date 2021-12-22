@@ -29,7 +29,6 @@ function getPosition() {
 }
 
 function onAddMarker(lat, lng) {
-  console.log('Adding a marker');
   mapService.addMarker({ lat, lng });
 }
 
@@ -88,7 +87,6 @@ function onRemoveLoc(locId) {
 }
 
 function renderWeather(weather) {
-  console.log('weather', weather);
   const strHtml = `
       <p>Temp:<span>${weather.temp}</span></p>
       <p>Wind:<span>${weather.wind}</span></p>
@@ -98,7 +96,6 @@ function renderWeather(weather) {
 
 function onCopyQueryString() {
   const lastPos = mapService.getLastLoc();
-  console.log('the last pos', lastPos);
 
   navigator.clipboard.writeText(
     `https://ronafain.github.io/TravelTip/index.html?lat=${lastPos.lat}&lng=${lastPos.lng}`
