@@ -6,6 +6,8 @@ window.onAddMarker = onAddMarker;
 window.onGoToLoc = onGoToLoc;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.onShowLoc = onShowLoc;
+window.onRemoveLoc = onRemoveLoc;
 
 function onInit() {
   mapService
@@ -15,44 +17,77 @@ function onInit() {
     })
     .catch(() => console.log('Error: cannot init map'));
   // console.log('hello')
+  onGetLocs();
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
-  console.log('Getting Pos');
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 }
 
-function onAddMarker() {
+function onAddMarker(lat, lng) {
   console.log('Adding a marker');
-  mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
+  mapService.addMarker({ lat, lng });
 }
 
 function onGetLocs() {
-  locService.getLocs().then((locs) => {
-    console.log('Locations:', locs);
-    document.querySelector('.locs').innerText = JSON.stringify(locs);
-  });
+  locService.getLocs().then(renderLocTable);
+  // locService.getLocs().then(renderMarkers);
 }
 
 function onGetUserPos() {
   getPosition()
     .then((pos) => {
-      console.log('User position is:', pos.coords);
-      document.querySelector(
-        '.user-pos'
-      ).innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`;
+      let userPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      mapService.initMap(userPos.lat, userPos.lng);
     })
     .catch((err) => {
       console.log('err!!!', err);
     });
 }
+
 function onGoToLoc(ev) {
   ev.preventDefault();
   const elInput = document.querySelector('input[name="loc"]');
   const inputValue = elInput.value;
-  locService.getGeoCode(inputValue).then(mapService.panTo)
+  locService.getGeoCode(inputValue).then(mapService.panTo);
   // mapService.panTo(35.6895, 139.6917);
+  onGetLocs();
+}
+
+function renderLocTable(locs) {
+  var strHtmls = locs
+    .map((loc) => {
+      return `<tr>
+              <td>${loc.id}</td>
+              <td>${loc.name}</td>
+              <td>${loc.lat}</td>
+              <td>${loc.lng}</td>
+              <td>${loc.weather}</td>
+              <td>${loc.createdAt}</td>
+              <td>${loc.updatedAt}</td>
+              <td><button onclick="onShowLoc('${loc.lat}' , '${loc.lng}')">Go</button></td>
+              <td><button onclick="onRemoveLoc('${loc.id}')">Delete</button></td>
+            </tr>`;
+    })
+    .join('');
+
+  document.querySelector('tbody').innerHTML = strHtmls;
+}
+
+function renderMarkers(locs) {
+  locs.forEach((loc) => onAddMarker(loc.lat, loc.lng));
+}
+
+function onShowLoc(lat, lng) {
+  mapService.moveToMap({ lat: +lat, lng: +lng });
+  onGetLocs();
+}
+
+function onRemoveLoc(locId) {
+  console.log('loction id', locId);
+  locService.removeLoc(locId);
+  onGetLocs();
 }

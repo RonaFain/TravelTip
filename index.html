@@ -15,7 +15,7 @@
             <input type="text" name="loc" placeholder="enter location!" />
             <button>GO</button>
         </form>
-        <button onclick="onGoToMyLoc()">My location</button>
+        <button onclick="onGetUserPos()">My location</button>
     </header>
     <section class="curr-location">
         <div class="location-name">
@@ -25,7 +25,23 @@
     </section>
     <main class="main grid">
         <div class="weather-container"></div>
-        <div class="loc-table-container"></div>
+        <div class="loc-table-container">
+            <table>
+                <thead>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Lat</th>
+                    <th>Lng</th>
+                    <th>Weather</th>
+                    <th>Created at</th>
+                    <th>Updated at</th>
+                    <th colspan="2">Actions</th>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
         <div class="map-container">
             <div id="map" style="width: 100%; height: 400px;"></div>
         </div>

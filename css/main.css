@@ -1,3 +1,6 @@
+/* ***GENERAL*** */
+
+
 *{
     box-sizing: border-box;
 }
@@ -6,11 +9,18 @@
 body{
     background-color: lightgray;
     margin: 0;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 0 20px 0 20px;
+}
+button{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
 }
 
 
-
-/* ****HELPERS*** */
 
 .main{
     display: grid;
@@ -30,8 +40,48 @@ body{
 .loc-table-container{
     grid-area: loc;
     background-color: lightseagreen;
+    
+}
+
+table{
+    border: 1px solid black;
+    font-size: 12px;
+    margin: auto;
 }
 .map-container{
     grid-area: map;
 }
 
+header input{
+    height: 40px;
+    width: 200px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+ form button{
+     font-size: 15px;
+     height: 40px;
+}
+
+/* ***CURRENT LOCATION SECTION*** */
+
+.curr-location{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.curr-location p{
+    margin-inline-end: 50px;
+    font-size: 1.5em;
+    font-weight: bolder;
+
+}
+.curr-location p span{
+    font-weight:lighter;
+    font-size: 0.8em;
+}
+
+button.copy{
+    height: 40px;
+
+}
