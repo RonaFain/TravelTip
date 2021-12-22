@@ -9,14 +9,13 @@ export const mapService = {
 var gMap;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-  console.log('InitMap');
   return _connectGoogleApi().then(() => {
-    console.log('google available');
     gMap = new google.maps.Map(document.querySelector('#map'), {
       center: { lat, lng },
       zoom: 15,
     });
-    console.log('Map!', gMap);
+    let posToMark = { lat: lat, lng: lng };
+    addMarker(posToMark);
   });
 }
 
@@ -29,9 +28,9 @@ function addMarker(loc) {
   return marker;
 }
 
-function panTo(cords) {
-  const laLatLng = new google.maps.LatLng(cords.lat, cords.lng);
-  addMarker(cords);
+function panTo(loc) {
+  const laLatLng = new google.maps.LatLng(loc.lat, loc.lng);
+  addMarker(loc);
   gMap.panTo(laLatLng);
 }
 
