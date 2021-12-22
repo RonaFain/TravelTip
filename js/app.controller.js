@@ -16,7 +16,6 @@ function onInit() {
       console.log('Map is ready');
     })
     .catch(() => console.log('Error: cannot init map'));
-  // console.log('hello')
   onGetLocs();
 }
 
@@ -34,7 +33,6 @@ function onAddMarker(lat, lng) {
 
 function onGetLocs() {
   locService.getLocs().then(renderLocTable);
-  // locService.getLocs().then(renderMarkers);
 }
 
 function onGetUserPos() {
@@ -53,7 +51,6 @@ function onGoToLoc(ev) {
   const elInput = document.querySelector('input[name="loc"]');
   const inputValue = elInput.value;
   locService.getGeoCode(inputValue).then(mapService.panTo);
-  // mapService.panTo(35.6895, 139.6917);
   onGetLocs();
 }
 
@@ -77,17 +74,13 @@ function renderLocTable(locs) {
   document.querySelector('tbody').innerHTML = strHtmls;
 }
 
-function renderMarkers(locs) {
-  locs.forEach((loc) => onAddMarker(loc.lat, loc.lng));
-}
-
 function onShowLoc(lat, lng) {
   mapService.moveToMap({ lat: +lat, lng: +lng });
   onGetLocs();
 }
 
 function onRemoveLoc(locId) {
-  console.log('loction id', locId);
   locService.removeLoc(locId);
+  mapService.initMap();
   onGetLocs();
 }

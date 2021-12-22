@@ -1,5 +1,5 @@
 import { api } from '../../api.js';
-import { locService } from './services/loc.service.js';
+import { locService } from './loc.service.js';
 
 export const mapService = {
   initMap,
@@ -35,7 +35,11 @@ function addMarker(loc) {
 }
 
 function addLocsToMap() {
-  locService.getLocs().then(locs => console.log(locs));
+  locService.getLocs().then(locs => {
+    locs.forEach(loc => {
+      addMarker({lat: loc.lat , lng: loc.lng})
+    });
+  });
 }
 
 function panTo(loc) {
@@ -46,7 +50,6 @@ function panTo(loc) {
 
 function _connectGoogleApi() {
   if (window.google) return Promise.resolve();
-  // const API_KEY = 'AIzaSyDJT_0I2p9RrSIS-V3tvG0XChzgDjkyODA';
   const API_KEY = api.APIKEY;
   var elGoogleApi = document.createElement('script');
   elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
