@@ -1,5 +1,3 @@
 export const api = {
-   APIKEY
-}
-
-const APIKEY =  'AIzaSyAo38Eu3J2sctb8NIVS4KVUJx0eZDuHfp0'
+  APIKEY: 'AIzaSyDJT_0I2p9RrSIS-V3tvG0XChzgDjkyODA',
+};
