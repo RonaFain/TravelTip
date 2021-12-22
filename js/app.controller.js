@@ -3,7 +3,7 @@ import { mapService } from './services/map.service.js'
 
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
-window.onPanTo = onPanTo;
+window.onGoToLoc = onGoToLoc;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 
@@ -13,6 +13,7 @@ function onInit() {
             console.log('Map is ready');
         })
         .catch(() => console.log('Error: cannot init map'));
+    // console.log('hello')
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -47,7 +48,12 @@ function onGetUserPos() {
             console.log('err!!!', err);
         })
 }
-function onPanTo() {
-    console.log('Panning the Map');
-    mapService.panTo(35.6895, 139.6917);
+function onGoToLoc(ev) {
+    console.log(ev)
+    ev.preventDefault()
+    const elInput = document.querySelector('input[name="loc"]')
+    const inputValue = elInput.value
+   locService.getGeoCode(inputValue).then(mapService.panTo)
+    // mapService.panTo(32.0626854, 34.7709289);
+    // mapService.panTo(35.6895, 139.6917);
 }
