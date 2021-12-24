@@ -4,42 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
     <title>TravelTip</title>
 </head>
 
 <body>
     <header>
-        <h1>TravelTip Starter</h1>
-        <form onsubmit="onGoToLoc(event)">
-            <input type="text" name="loc" placeholder="enter location!" />
-            <button>GO</button>
-        </form>
-        <button onclick="onGetUserPos()">My location</button>
+        <div class="main-layout flex space-between align-center">
+            <h1>TravelTip</h1>
+            <form onsubmit="onGoToLoc(event)">
+                <input type="text" name="loc" placeholder="Enter location" />
+                <button>GO</button>
+            </form>
+        </div>
     </header>
-    <section class="curr-location">
+    <section class="curr-location main-layout flex space-between align-center">
         <div>
             <p>Location: <span class="loc-name">Petah Tikva</span></p>
         </div>
-        <button class="copy" onclick="onCopyQueryString()">Copy location</button>
+        <button class="copy-btn" onclick="onCopyQueryString()">Copy location</button>
     </section>
-    <main class="main grid">
+    <main class="main main-layout grid">
         <div class="weather-container">
-            <!-- <h2>Name</h2>
-            <p>Temp:<span>123</span></p>
-            <p>Wind:<span>123</span></p> -->
         </div>
         <div class="loc-table-container">
             <table>
                 <thead>
-                    <th>ID</th>
                     <th>Name</th>
-                    <th>Lat</th>
-                    <th>Lng</th>
-                    <th>Weather</th>
-                    <th>Created at</th>
-                    <th>Updated at</th>
-                    <th colspan="2">Actions</th>
+                    <th colspan="2" style="width: 30%">Actions</th>
                 </thead>
                 <tbody>
                     
@@ -50,6 +43,8 @@
             <div id="map" style="width: 100%; height: 400px;"></div>
         </div>
     </main>
+
+    <button class="my-pos-btn" onclick="onGetUserPos()"><i class="fa fa-compass my-pos-icon"></i></button>
 
     <script src="lib/axios.js"></script>
     <script type="module" src="js/app.controller.js"></script>

@@ -27,9 +27,11 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       zoom: 15,
     });
     let posToMark = { lat: lat, lng: lng };
-    gLastLoc = {lat,lng};
+    gLastLoc = { lat, lng };
     addMarker(posToMark);
     addLocsToMap();
+    const locBtn = document.querySelector('.my-pos-btn');
+    gMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locBtn);
     google.maps.event.addListener(gMap, 'click', function (event) {
       addMarker(event.latLng);
     });
@@ -85,11 +87,11 @@ function moveToMap(loc) {
 function getWeather(lat, lang) {
   const W_KEY = api.WEATHERKEY;
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lang}&appid=${api.WEATHERKEY}`;
-  return axios.get(url).then(res => {
+  return axios.get(url).then((res) => {
     const weather = {
       temp: (res.data.main.temp - 273).toFixed(2),
-      wind: res.data.wind.speed + ' 🌀 '
-    }
+      wind: res.data.wind.speed + ' 🌀 ',
+    };
     return weather;
   });
 }

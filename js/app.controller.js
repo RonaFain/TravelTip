@@ -17,6 +17,7 @@ function onInit() {
       console.log('Map is ready');
     })
     .catch(() => console.log('Error: cannot init map'));
+
   onGetLocs();
   mapService.getWeather(32.0749831, 34.9120554).then(renderWeather);
 }
@@ -60,22 +61,17 @@ function renderLocTable(locs) {
   var strHtmls = locs
     .map((loc) => {
       return `<tr>
-              <td>${loc.id}</td>
               <td>${loc.name}</td>
-              <td>${loc.lat}</td>
-              <td>${loc.lng}</td>
-              <td>${loc.weather}</td>
-              <td>${loc.createdAt}</td>
-              <td>${loc.updatedAt}</td>
-              <td><button onclick="onShowLoc('${loc.lat}' , '${loc.lng}', '${loc.name}')">Go</button></td>
-              <td><button onclick="onRemoveLoc('${loc.id}')">Delete</button></td>
+              <td class="btn"><button onclick="onShowLoc('${loc.lat}' , '${loc.lng}', '${loc.name}')">
+              <i class="fa fa-location-arrow"></button></td>
+              <td class="btn"><button onclick="onRemoveLoc('${loc.id}')">
+              <i class="fa fa-trash-o"></i></button></td>
             </tr>`;
     })
     .join('');
 
   document.querySelector('tbody').innerHTML = strHtmls;
-  console.log(locs[locs.length - 1]);
-  document.querySelector('.loc-name').innerText = locs[locs.length -1].name;
+  if(locs.length) document.querySelector('.loc-name').innerText = locs[locs.length - 1].name;
 }
 
 function onShowLoc(lat, lng, name) {
