@@ -45,6 +45,7 @@ button {
   grid-area: weather;
   margin-bottom: 10px;
   background-color: #f0ece3;
+  /* background-color: white; */
   width: 80%;
   border: 2px solid #8267be;
 }
@@ -58,6 +59,7 @@ table {
   border-collapse: collapse;
   width: 80%;
   background-color: #f0ece3;
+  /* background-color: white; */
 }
 
 th {
